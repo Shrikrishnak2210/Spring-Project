@@ -1,0 +1,38 @@
+
+server:
+  port: 8081
+  
+
+
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id:  testgroup
+      bootstrap-servers:
+      - localhost:9092
+      
+  application:
+    name: CourseService
+    
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 100
+      permittedNumberOfCallsInHalfOpenState: 10
+      waitDurationInOpenState: 10
+      failureRateThreshold: 60
+      registerHealthIndicator: true
+      
+     
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - "*"
+    
+  endpoint:
+    health:
+      show-details: always
